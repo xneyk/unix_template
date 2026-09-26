@@ -9,7 +9,16 @@ echo "-- Q1 --"
 # Example output:
 # 14 book
 # 10 cover
-mostCommonWords=$()
+mostCommonWords=$(
+   cat *.txt |
+   tr '[:upper:]' '[:lower:]' |  # convert capital letter to lowercase
+   tr -cd '[:alpha:] \n' |       # delete everything that is not a letter a space or a newline
+   tr ' ' '\n' |                 # replace newline with spaces
+   sort |                        # same words together for letting uniq counting them
+   uniq -c |
+   sort -r |                     # sort from bigger to lower
+   head -10                      # keep only 10 first lines
+)
 # Prints the mostCommonWords
 echo "Most common words in my book:"
 echo "$mostCommonWords"
@@ -28,7 +37,12 @@ echo "-- Q2 --"
 #
 # Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts
 # Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean
-linesFromTheBook=$()
+linesFromTheBook=$(
+   cat *.txt |
+   sed -E 's/([.!?]) /\1\n/g' |  # add "\n" after subsequences ". ", "! " and "? "
+                                 # as they are meant to mean "end of the sentence"
+   head -7                       # keep only the first 7 sentences
+)
 echo "Listing of lines from the book:"
 echo "$linesFromTheBook"
 
@@ -41,7 +55,10 @@ echo "-- Q3 --"
 # It seems that the writer of the book mistyped the word "I" and used a lower case "i" instead.
 # Write a pipeline that finds all the text files and replaces all the words "i" with its uppercase variant.
 # Make sure that it is NOT inline and that the output book is in its original order.
-fixedBook=$()
+fixedBook=$(
+   cat *.txt |
+   sed -E 's/(^|[^[:alpha:]])i([^[:alpha:]]|$)/\1I\2/g'
+)
 echo "The corrected book:"
 echo "$fixedBook"
 echo "--------"
