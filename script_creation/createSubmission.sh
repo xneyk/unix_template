@@ -5,8 +5,11 @@
 # This script should take an output name as the first parameter.
 # If called in a directory, it should recursively find all the `.sh` files and add them to a zip folder.
 # The zip folder should only contain `.sh` files and no folders.
+zipName="$1"
 
-mkdir $1
-for i in $(find .. -name "*.sh"); do
-    cp $i $1
-done
+if [ "$1" == "" ]; then
+   echo "Usage: $0 <output.zip>"
+   exit 1
+fi
+
+find . -type f -name "*.sh" -print0 | xargs -0 zip -j "$zipName"
