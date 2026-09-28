@@ -65,7 +65,7 @@ echo "First pipeline results:"
 echo "$firstPipeline"
 
 # Implement a pipeline that displays only the owner of the log files in the current directory.
-secondPipeline=$(find -name "*_log*"|ls -l| tail -n +2| cut -d' ' -f3 )
+secondPipeline=$(find -name "*_log*"| xargs stat -c '%U')
 # Print result
 echo "Second pipeline results:"
 echo "$secondPipeline"
