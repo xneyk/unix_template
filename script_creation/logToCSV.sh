@@ -9,6 +9,4 @@
 # Example: `./logToCSV access_log > output.csv`
 # It could take some time to convert all of the `access_log` file contents. Consider using a small subset for testing.
 
-while read -r line; do
-    echo $line | tr -d '[' | tr -d '"'| awk '{ OFS = "," ;print $1, $4, $7, $9, $10}'
-done
+cat $1 | tr -d '[' | tr -d '"'| awk '{ OFS = "," ;print $1, $4, $7, $9, $10}'
