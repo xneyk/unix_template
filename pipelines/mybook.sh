@@ -39,9 +39,9 @@ echo "-- Q2 --"
 # Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean
 linesFromTheBook=$(
    cat *.txt |
-   sed -E 's/([.!?]) /\1\n/g' |  # add "\n" after subsequences ". ", "! " and "? "
-                                 # as they are meant to mean "end of the sentence"
-   head -7                       # keep only the first 7 sentences
+   sed -E 's/[.!?] /\n/g; s/[.!?]$//g' |  # replace subsequences ".", "!" and "?" for "\n"
+                                          # as they are meant to mean "end of the sentence"
+   head -7                                # keep only the first 7 sentences
 )
 echo "Listing of lines from the book:"
 echo "$linesFromTheBook"
